@@ -1,35 +1,25 @@
-
-# XXX the name of this file is probably wrong.
-
-# XXX each page will have a list of tags too.
-
 class Page
+  class << self
+    def find_or_create_by_name(name)
+      page = find_by_name name
+      page ||= Page.new(name).save
+    end
+  end
+  
+  attr_reader :name
+  attr_accessor :content
 
-  attr_reader :pagename
-
-  def initialize pgnm
-    # XXX need sanity checking on the name of the page.
-    @pagename = pgnm
-    load pgnm if self.exists? pgnm
+  def initialize(name)
   end
 
-  def pagename
-    @pagename
-  end
-
-  def load pgn
-  end
-
-  # Obvious
-  def self.exists? pgnm
-  end
-
-  # Save the page back to disk.
   def save
+    self
   end
 
-  # Return the contents of the page.
-  def dump
+  def content
+  end
+  
+  def tags
   end
 
 end
