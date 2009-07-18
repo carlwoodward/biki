@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require 'bluecloth'
 
 get '/' do
   haml :index
