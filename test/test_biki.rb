@@ -1,24 +1,27 @@
 require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
 describe 'Testing page model' do
-  it 'should create a new file' do 
-    file_name = Page.data_store + 'testing'
-    File.unlink(file_name)
-    page = Page.load 'testing'
-    page.content = 'more testing'
+  it 'should create a the data store if it is missing' do
+    File.exists?(Page.data_store).should.be.true
+  end
+  
+  it 'should load a page' do
+    page = Page.load 'test'
+    page.content.should.not.be.nil
+  end
+  
+  it 'should save content' do
+    page = Page.load 'test'
+    page.content = 'Hello world'
     page.save
-    File.exists(file_name).should.be.true
-    lines = Array.new
-    File.open(file_name) do |file|
-      lines = file.readlines
-    end
-    lines.size.should.be 1
-    lines[0].chomp!
-    lines[0].should.equal = "more testing"
+    Page.load('test').content.should.equal 'Hello world'
   end
-  it 'load the existing file' do
-  end
-  it 'save changes' do
+  
+  it 'should save tags' do
+    page = Page.load 'test'
+    page.tags = %w(test one two)
+    page.save
+    Page.load('test').tags.should.equal %w(test one two)
   end
 end
 
