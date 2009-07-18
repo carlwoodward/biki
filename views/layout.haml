@@ -22,27 +22,20 @@
             %a{:href => '/logout'} Logout
       #page
         %ul.tags
-          %li
-            %a{:href => '#'} ruby
-          %li
-            %a{:href => '#'} rails
+          - @page.tags.each do |tag|
+            %li
+              %a{:href => '#'}= tag
         .body
-          :markdown
-            # Caching with Rails
-          
-            - caches_page
-            - caches_action
-            - cache { }
+          = yield
           
       #sidebar
         %ul.actions
           %li
-            %a{:href => '/edit'} Edit this page
+            %a{:href => "/#{@page.name}/edit"} Edit this page
           %li
             %a{:href => '/add'} Add a new page
         %h3 Recent Pages
         %ul.pages
-          %li
-            %a{:href => '#'} Caching with Rails
-          %li
-            %a{:href => '#'} Sinatra code
+          - @pages.each do |page|
+            %li
+              %a{:href => "/#{page.name}"}= page.name

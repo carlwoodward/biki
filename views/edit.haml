@@ -1,0 +1,12 @@
+%form{:action => "/#{@page.name}", :method => 'post'}
+  %fieldset
+    %ul
+      %li
+        %textarea{:name => 'content'}= @page.content
+      %li
+        %label Tags
+        %input{:name => 'tags_as_string', :value => @page.tags_as_string}
+      %li.submit
+        %input{:type => 'submit', :value => 'Save page'}
+        or
+        %a{:href => "/#{@page.name}"} Cancel

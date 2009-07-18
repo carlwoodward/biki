@@ -1,10 +1,18 @@
 require 'fileutils'
+require 'active_support'
 
 class Page
   class << self
     def load(name)
       new name
     end
+    
+    def all
+      files = Dir.entries(data_store).delete_if{|f| f.starts_with?('.') or f.ends_with?('_tags')}
+      files.collect{|f| Page.load f}
+    end
+    
+    # protected
     
     def data_store
       data_store = File.dirname(__FILE__) + "/../../biki_files/"
@@ -31,6 +39,18 @@ class Page
   def save
     save_content
     save_tags
+  end
+  
+  def to_html
+    BlueCloth::new(@content).to_html
+  end
+  
+  def tags_as_string
+    @tags.join(' ')
+  end
+  
+  def tags_as_string=(tags_string)
+    @tags = tags_string.split(' ')
   end
   
   # protected
