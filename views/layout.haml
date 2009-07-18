@@ -1,0 +1,19 @@
+!!!
+%html{html_attrs}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+    %title Biki | Bruce's Wiki
+    %link{:href => '/blueprint/screen.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => '/blueprint/print.css', :media => 'print', :rel => 'stylesheet', :type => 'text/css'}
+    /[if lt IE 8]
+      %link{:href => '/blueprint/print.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+      
+    %link{:href => '/css/default.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    / %link{:href => '/css/background.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+  %body
+    .container.showgrid
+      #header
+        %a{:href => '/'}
+          %img{:src => '/images/logo.gif', :alt => 'Logo'}
+      #content
+        This is where the content goes
