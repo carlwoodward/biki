@@ -1,8 +1,7 @@
 class Page
   class << self
     def find_or_create_by_name(name)
-      page = find_by_name name
-      page ||= Page.new(name).save
+      find_by_name(name) || new(name).save
     end
   end
   
