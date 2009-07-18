@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require 'bluecloth'
 
 $:.push File.expand_path(File.dirname(__FILE__))
 require 'biki_helper.rb'

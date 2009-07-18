@@ -9,11 +9,40 @@
       %link{:href => '/blueprint/print.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
       
     %link{:href => '/css/default.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
-    / %link{:href => '/css/background.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => '/css/background.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
   %body
     .container.showgrid
       #header
         %a{:href => '/'}
           %img{:src => '/images/logo.gif', :alt => 'Logo'}
-      #content
-        This is where the content goes
+        %ul.navigation
+          %li
+            %a{:href => '/sync'} Sync Wiki
+          %li
+            %a{:href => '/logout'} Logout
+      #page
+        %ul.tags
+          %li
+            %a{:href => '#'} ruby
+          %li
+            %a{:href => '#'} rails
+        .body
+          :markdown
+            # Caching with Rails
+          
+            - caches_page
+            - caches_action
+            - cache { }
+          
+      #sidebar
+        %ul.actions
+          %li
+            %a{:href => '/edit'} Edit this page
+          %li
+            %a{:href => '/add'} Add a new page
+        %h3 Recent Pages
+        %ul.pages
+          %li
+            %a{:href => '#'} Caching with Rails
+          %li
+            %a{:href => '#'} Sinatra code
