@@ -2,6 +2,9 @@ require 'rubygems'
 require 'sinatra'
 require 'haml'
 
+$:.push File.expand_path(File.dirname(__FILE__))
+require 'biki_helper.rb'
+
 get '/' do
   haml :index
 end
