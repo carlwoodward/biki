@@ -7,7 +7,7 @@ $:.push File.expand_path(File.dirname(__FILE__))
 load 'biki_helper.rb'
 
 before do
-  @pages = Page.all
+  @pages = Page.recent_page_names
 end
 
 get '/' do

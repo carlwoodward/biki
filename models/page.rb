@@ -7,8 +7,10 @@ class Page
       new name
     end
     
-    def all
+    def recent_page_names
       files = Dir.entries(data_store).delete_if{|f| f.starts_with?('.') or f.ends_with?('_tags')}
+      # I can't believe that all of the pages in the directory are being
+      # loaded to just to get a list of the names.
       files.collect{|f| Page.load f}
     end
     
