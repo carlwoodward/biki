@@ -32,8 +32,10 @@
         %ul.actions
           %li
             %a{:href => "/#{@page.name}/edit"} Edit this page
-        %h3 Recent Pages
-        %ul.pages
-          - @pages.each do |page|
-            %li
-              %a{:href => "/#{page.name}"}= page.name
+        - if @pages.size > 0
+          %h3 Recent Pages
+          %ul.pages
+            - @pages.each do |page|
+              %li
+                %a{:href => "/#{page}"}= page
+

@@ -6,15 +6,28 @@ class Page
     def load(name)
       new name
     end
-    
+
     def recent_page_names
-      files = Dir.entries(data_store).delete_if{|f| f.starts_with?('.') or f.ends_with?('_tags')}
-      # I can't believe that all of the pages in the directory are being
-      # loaded to just to get a list of the names.
-      files.collect{|f| Page.load f}
+      newest(10, all_page_files_in_data_store())
     end
     
     # protected
+    
+    def all_page_files_in_data_store
+      recent_pages = []
+      Dir.entries(data_store).each do |filename|
+        if filename !~ /^\./ && filename !~ /_tags$/
+          recent_pages << filename
+        end
+      end
+      recent_pages
+    end
+
+    def newest(count, names)
+      names.collect {|name| 
+        { :name => name, :mtime => File.mtime(path(name)) } 
+      }.sort {|a, b| b[:mtime] <=> a[:mtime] }.collect {|file| file[:name] }[0...count]
+    end
     
     def data_store
       data_store = File.dirname(__FILE__) + "/../../biki_files/"
@@ -80,14 +93,14 @@ class Page
   end
   
   def load_content
-    FileUtils.touch content_path
+    FileUtils.touch content_path unless File.exists? content_path
     File.open(content_path) do |file|
       @content = file.read
     end
   end
   
   def load_tags
-    FileUtils.touch tags_path
+    FileUtils.touch tags_path unless File.exists? tags_path
     File.open(tags_path) do |file|
       file.each_line do |line|
         @tags << line.chomp
