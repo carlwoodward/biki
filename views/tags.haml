@@ -1,0 +1,10 @@
+
+%h3 
+  = "TAG: '#{@tag_name}'"
+
+%hr
+
+%ul.tagslist
+  - @tagstable[@tag_name].each do |page|
+    %li
+      %a{:href => "/#{page}"}= page

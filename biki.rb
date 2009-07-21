@@ -8,10 +8,11 @@ load 'biki_helper.rb'
 
 before do
   @pages = Page.recent_page_names
+  @tags  = Page.all_tag_names
 end
 
 get '/' do
-  @page = @pages.first || Page.load('home')
+  @page = Page.load(@pages.first || 'home')
   haml :page
 end
 
@@ -19,6 +20,20 @@ get '/css/:file.css' do |file|
   content_type 'text/css', :charset => 'utf-8'
   sass file.to_sym
 end
+
+get '/alltagstable' do
+  @page = nil
+  @tagstable = Page.make_tags_table
+  haml :alltagstable
+end
+
+get '/tags/:tag_name' do |tag_name|
+  @page = nil
+  @tag_name = tag_name
+  @tagstable = Page.map_pages_to_tags
+  haml :tags
+end
+
 
 get '/:page_name' do |page_name|
   @page = Page.load page_name

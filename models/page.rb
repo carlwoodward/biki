@@ -10,17 +10,51 @@ class Page
     def recent_page_names
       newest(10, all_page_files_in_data_store())
     end
-    
+
+    def all_tag_names
+      map_pages_to_tags().keys
+    end
+
+    def make_tags_table
+      tags2pages = {}
+      load_all_tag_names().each {|h|
+        h[1].each {|k| 
+          tags2pages[k] = [] unless tags2pages.has_key?(k)
+          tags2pages[k] << h[0]
+        }
+      }
+      tags2pages
+    end
+
+    def map_pages_to_tags
+      pages2tags = {}
+      Page.all_tag_files_in_data_store.each {|tag|
+        page_name = tag.sub(/_tags$/,'')
+        File.open(path(tag)) do |file|
+          file.readlines.each do |line|
+            line.chomp!
+            pages2tags[line] = [] unless pages2tags.has_key?(line)
+            pages2tags[line] << page_name
+          end
+        end
+      }
+      pages2tags
+    end
+
     # protected
     
+    def all_tag_files_in_data_store
+      files_in_data_store { |name| name =~ /_tags$/ }
+    end
+    
     def all_page_files_in_data_store
-      recent_pages = []
-      Dir.entries(data_store).each do |filename|
-        if filename !~ /^\./ && filename !~ /_tags$/
-          recent_pages << filename
-        end
-      end
-      recent_pages
+      files_in_data_store { |name| name !~ /_tags$/ }
+    end
+
+    def files_in_data_store
+      Dir.entries(data_store).find_all { |filename|
+        filename != "." && filename != ".." && yield(filename)
+      }
     end
 
     def newest(count, names)
