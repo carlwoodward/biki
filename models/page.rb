@@ -70,7 +70,7 @@ class Page
     def sort_by_modification_time(files_plus_modifcation_time)
       files_plus_modifcation_time.sort do |a, b| 
         b[:mtime] <=> a[:mtime] 
-      end
+      end.collect { |h| h[:name] }
     end
     
     def data_store
