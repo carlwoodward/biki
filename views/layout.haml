@@ -23,9 +23,9 @@
       #page
         - if @page != nil
           %ul.tags
-          - @page.tags.each do |tag|
-            %li
-              %a{:href => "/tags/#{tag}"}= tag
+            - @page.tags.each do |tag|
+              %li
+                %a{:href => "/tags/#{tag}"}= tag
         .body
           = yield
           

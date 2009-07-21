@@ -8,7 +8,7 @@ class Page
     end
 
     def recent_page_names
-      newest(10, all_page_files_in_data_store())
+      newest(10, all_page_files_in_data_store)
     end
 
     def all_tag_names
@@ -17,12 +17,12 @@ class Page
 
     def make_tags_table
       tags2pages = {}
-      load_all_tag_names().each {|h|
-        h[1].each {|k| 
+      map_pages_to_tags().each do |h|
+        h[1].each do |k| 
           tags2pages[k] = [] unless tags2pages.has_key?(k)
           tags2pages[k] << h[0]
-        }
-      }
+        end
+      end
       tags2pages
     end
 
@@ -52,15 +52,25 @@ class Page
     end
 
     def files_in_data_store
-      Dir.entries(data_store).find_all { |filename|
-        filename != "." && filename != ".." && yield(filename)
-      }
+      Dir.entries(data_store).find_all do |filename|
+        filename !~ /^\./ && yield(filename)
+      end
     end
 
     def newest(count, names)
-      names.collect {|name| 
+      sort_by_modification_time(find_file_modification_time(names))[0...count]
+    end
+
+    def find_file_modification_time(names)
+      names.collect do |name| 
         { :name => name, :mtime => File.mtime(path(name)) } 
-      }.sort {|a, b| b[:mtime] <=> a[:mtime] }.collect {|file| file[:name] }[0...count]
+      end
+    end
+    
+    def sort_by_modification_time(files_plus_modifcation_time)
+      files_plus_modifcation_time.sort do |a, b| 
+        b[:mtime] <=> a[:mtime] 
+      end
     end
     
     def data_store
