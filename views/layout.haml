@@ -21,28 +21,28 @@
           %li
             %a{:href => '/logout'} Logout
       #page
-        - if @page != nil
+        - unless @page.nil?
           %ul.tags
-          - @page.tags.each do |tag|
-            %li
-              %a{:href => "/tags/#{tag}"}= tag
+            - @page.tags.each do |tag|
+              %li
+                %a{:href => "/tags/#{tag}"}= tag
         .body
           = yield
           
       #sidebar
         %ul.actions
-          - if @page != nil
+          - unless @page.nil?
             %li
               %a{:href => "/#{@page.name}/edit"} Edit this page
           %li
             %a{:href => "/tagstable"} Tags Table
-        - if @pages.size > 0
+        - unless @pages.empty?
           %h3 Recent Pages
           %ul.pages
             - @pages.each do |page|
               %li
                 %a{:href => "/#{page}"}= page
-        - if @tags.size > 0
+        - unless @tags.empty?
           %h3 All Tags
           %ul.tagslist
             - @tags.each do |tag|
