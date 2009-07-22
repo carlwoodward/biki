@@ -21,12 +21,6 @@ get '/css/:file.css' do |file|
   sass file.to_sym
 end
 
-get '/alltagstable' do
-  @page = nil
-  @tagstable = Page.make_tags_table
-  haml :alltagstable
-end
-
 get '/tags/:tag_name' do |tag_name|
   @page = nil
   @tag_name = tag_name
