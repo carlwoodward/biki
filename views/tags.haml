@@ -1,10 +1,10 @@
 
-%h3 
-  = "TAG: '#{@tag_name}'"
+#tagslist
+  %h3.tagslist 
+    = "Pages tagged with: <b>'#{@tag_name}'</b>"
 
-%hr
-
-%ul.tagslist
-  - @tagstable[@tag_name].each do |page|
-    %li
-      %a{:href => "/#{page}"}= page
+  #pageslist
+    %ul.tagslist
+      - @tagstable[@tag_name].each do |page|
+        %li
+          %a{:href => "/#{page}"}= page
