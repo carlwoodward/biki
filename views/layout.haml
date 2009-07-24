@@ -6,43 +6,37 @@
     %link{:href => '/blueprint/screen.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/blueprint/print.css', :media => 'print', :rel => 'stylesheet', :type => 'text/css'}
     /[if lt IE 8]
-      %link{:href => '/blueprint/print.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+      %link{:href => '/blueprint/ie.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
       
     %link{:href => '/css/default.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/css/background.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
   %body
-    .container.showgrid
+    .container.showgrid  
       #header
-        %a{:href => '/'}
-          %img{:src => '/images/logo.gif', :alt => 'Logo'}
-        %ul.navigation
-          %li
-            %a{:href => '/sync'} Sync Wiki
-          %li
-            %a{:href => '/logout'} Logout
-      #page
-        - unless @page.nil?
-          %ul.tags
-            - @page.tags.each do |tag|
-              %li
-                %a{:href => "/tags/#{tag}"}= tag
-        .body
-          = yield
-          
-      #sidebar
-        %ul.actions
-          - unless @page.nil?
+        .span-20
+          %a{:href => '/'}
+            %img{:src => '/images/logo.gif', :alt => 'Logo'}
+        .span-4.last
+          %ul
             %li
-              %a{:href => "/#{@page.name}/edit"} Edit this page
-        - unless @pages.empty?
-          %h3 Recent Pages
-          %ul.pages
-            - @pages.each do |page|
-              %li
-                %a{:href => "/#{page}"}= page
-        - unless @tags.empty?
-          %h3 All Tags
-          %ul.tagslist
-            - @tags.each do |tag|
-              %li
-                %a{:href => "/tags/#{tag}"}= tag 
+              %a{:href => '/sync'} Sync Wiki
+            %li
+              %a{:href => '/logout'} Logout
+      #menubar
+        .span-24.last
+          %ul.menubar 
+            %li
+              %a{:href => "/pages"} Pages
+            %li
+              %a{:href => "/tags"} Tags
+            %li
+              %a{:href => "/#{@page.name}/edit"} Edit
+      #tagslist
+        .span-24.last
+          - unless @page.nil?
+            %ul
+              - @page.tags.each do |tag|
+                %li
+                  %a{:href => "/tag/#{tag}"}= tag
+      .body.span-24.last
+        = yield

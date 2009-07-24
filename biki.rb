@@ -21,11 +21,19 @@ get '/css/:file.css' do |file|
   sass file.to_sym
 end
 
-get '/tags/:tag_name' do |tag_name|
+get '/pages' do
+  haml :pages
+end
+
+get '/tags' do
+  haml :tags
+end
+
+get '/tag/:tag_name' do |tag_name|
   @page = nil
   @tag_name = tag_name
   @tagstable = Page.map_pages_to_tags
-  haml :tags
+  haml :tag
 end
 
 
