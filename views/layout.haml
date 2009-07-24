@@ -11,26 +11,18 @@
     %link{:href => '/css/default.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/css/background.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
   %body
-    .container.showgrid  
+    .container  
       #header
-        .span-20
+        .span-24.last
           %a{:href => '/'}
             %img{:src => '/images/logo.gif', :alt => 'Logo'}
-        .span-4.last
-          %ul
-            %li
-              %a{:href => '/sync'} Sync Wiki
-            %li
-              %a{:href => '/logout'} Logout
+
       #menubar
         .span-24.last
-          %ul.menubar 
-            %li
-              %a{:href => "/pages"} Pages
-            %li
-              %a{:href => "/tags"} Tags
-            %li
-              %a{:href => "/#{@page.name}/edit"} Edit
+          %a{:href => "/pages"} Pages :
+          %a{:href => "/tags"} Tags :
+          %a{:href => "/#{@page.name}/edit"} Edit
+
       #tagslist
         .span-24.last
           - unless @page.nil?
@@ -38,5 +30,7 @@
               - @page.tags.each do |tag|
                 %li
                   %a{:href => "/tag/#{tag}"}= tag
-      .body.span-24.last
-        = yield
+
+      .body
+        .span-24.last
+          = yield
