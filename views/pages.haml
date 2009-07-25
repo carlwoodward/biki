@@ -1,0 +1,36 @@
+
+.container
+  #pages_heading
+  .span-3
+    = 'PAGE'
+  .span-3
+    = 'TAGS'
+  .span-3
+    = 'Modification Time'
+  .span-15.last
+    = 'Page Summary'
+
+.container
+  #pages_info
+    - @previews.each do |preview|
+      .span-3
+        .pseudo_table
+          %a{ :href => "/#{preview.name}" }= preview.name
+      .span-3
+        .pseudo_table
+          - if preview.tags.empty?
+            %p
+              = 'None'
+          - else
+            - preview.tags.each do |tag|
+              %a{ :href => "/tag/#{tag}"}= tag
+      .span-3
+        .pseudo_table
+          = preview.modification_time
+      .span-15.last
+        .pseudo_table
+          - if preview.summary == ""
+            %p
+              = 'Empty'
+          - else
+            = preview.summary

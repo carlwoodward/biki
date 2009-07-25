@@ -6,6 +6,9 @@ class Page
     def load(name)
       new name
     end
+    
+    def page_name_preview_and_last_change_time
+    end
 
     def recent_page_names
       newest(10, all_page_files_in_data_store)
@@ -33,8 +36,8 @@ class Page
         File.open(path(tag)) do |file|
           file.readlines.each do |line|
             line.chomp!
-            pages2tags[line] = [] unless pages2tags.has_key?(line)
-            pages2tags[line] << page_name
+            pages2tags[page_name] = [] unless pages2tags.has_key?(page_name)
+            pages2tags[page_name] << line
           end
         end
       }

@@ -11,26 +11,18 @@
     %link{:href => '/css/default.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/css/background.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
   %body
-    .container  
-      #header
-        .span-24.last
-          %a{:href => '/'}
-            %img{:src => '/images/logo.gif', :alt => 'Logo'}
+    .container
+      .span-24
+        #header
+          %h1 biki
 
-      #menubar
-        .span-24.last
+      .span-24
+        #menubar
           %a{:href => "/pages"} Pages :
           %a{:href => "/tags"} Tags :
-          %a{:href => "/#{@page.name}/edit"} Edit
+          - if @page != nil
+            %a{:href => "/#{@page.name}/edit"} Edit
 
-      #tagslist
-        .span-24.last
-          - unless @page.nil?
-            %ul
-              - @page.tags.each do |tag|
-                %li
-                  %a{:href => "/tag/#{tag}"}= tag
-
-      .body
-        .span-24.last
+      .span-24
+        .body
           = yield

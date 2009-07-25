@@ -1,2 +1,29 @@
-#display_page
-  %h2 anything
+
+.container
+  #tags_heading
+    .span-3
+      = 'TAG'
+    .span-3
+      = 'PAGES'
+    .span-18.last
+      = 'Page Summary'
+      
+.container
+  #tags_info
+    - @tagstable.keys.each do |tag|
+      .span-3
+        .pseudo_table
+          %a{ :href => "/tag/#{tag}" }= tag
+      .span-3
+        .pseudo_table
+          - if @tagstable[tag].empty?
+            %p
+              = 'None'
+          - else
+            - @tagstable[tag].sort.each do |page|
+              %a{ :href => "/#{page}"}= page
+      .span-18.last
+        .pseudo_table
+          - @tagstable[tag].sort.each do |page|
+            = PagePreview.new(page).summary
+

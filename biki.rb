@@ -4,7 +4,9 @@ require 'haml'
 require 'bluecloth'
 
 $:.push File.expand_path(File.dirname(__FILE__))
-load 'biki_helper.rb'
+require 'biki_helper.rb'
+require 'models/page'
+require 'models/page_preview'
 
 before do
   @pages = Page.recent_page_names
@@ -22,20 +24,21 @@ get '/css/:file.css' do |file|
 end
 
 get '/pages' do
+  @previews = PagePreview.summary
   haml :pages
 end
 
 get '/tags' do
+  @tagstable = Page.make_tags_table
   haml :tags
 end
 
 get '/tag/:tag_name' do |tag_name|
   @page = nil
-  @tag_name = tag_name
-  @tagstable = Page.map_pages_to_tags
+  @tag_name = tag_name.to_s
+  @tagstable = Page.make_tags_table
   haml :tag
 end
-
 
 get '/:page_name' do |page_name|
   @page = Page.load page_name
